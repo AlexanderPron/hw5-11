@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static 'catalog/style/ph.css' %}">
+    <title>Книги</title>
+</head>
+<body>
+  <div class="wrap">
+    <ul class="nav head-nav">
+      <li class="nav-item item-head-nav">
+        <a class="nav-link" href="http://127.0.0.1:8000/">Главная</a>
+      </li>
+      <li class="nav-item item-head-nav">
+        <a class="nav-link" href="http://127.0.0.1:8000/ph/">Список книг</a>
+      </li>
+      <li class="nav-item item-head-nav">
+        <a class="nav-link" href="http://127.0.0.1:8000/admin/">Админка</a>
+      </li>
+    </ul>
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+              <div class="well">
+                  <div style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                      <ul class="nav nav-list">
+                        {% for ph in ph_list %}
+                          <li><label class="tree-toggler nav-header">{{ ph.name}}</label>
+                              <ul class="nav nav-list tree">
+                                {% for book in ph.books.all %}
+                                  <li id="description_id"><a href="#" id = "{{ book.ISBN }}" onclick="showDescription(`{{ book.description }}`)">{{ book.title }}</a></li>
+                                {% endfor %}
+                              </ul>
+                          </li>
+                          <li class="divider"></li>
+                        {% endfor %}
+                      </ul>
+                  </div>
+              </div>
+          </div>
+          <div class="col-7">
+            <fieldset class="content">
+              <legend class="legend-content">Описание</legend>
+              <div class="tab-content" id="nav-tabContent"></div>
+            </fieldset>
+          </div>
+      </div>
+
+  </div>
+  
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src={% static 'catalog/js/ph.js' %}></script>
+    <script>
+      function showDescription(book_id) {
+        document.querySelector('#nav-tabContent').innerHTML = book_id;
+      }
+     </script>
+</body>
+</html>
